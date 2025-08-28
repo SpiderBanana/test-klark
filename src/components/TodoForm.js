@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./TodoForm.css";
+import { generateDescription } from "../services/openaiService";
 
 function TodoForm({ onAdd }) {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ function TodoForm({ onAdd }) {
   });
 
   const [errors, setErrors] = useState({});
+  const [isGenerating, setIsGenerating] = useState(false);
 
   // Bug Facile - Les formulaires ne répondent pas aux saisies (TodoForm)
   const handleInputChange = (e) => {
@@ -70,6 +72,22 @@ function TodoForm({ onAdd }) {
     }
   };
 
+  const handleGenerateDescription = async () => {
+    if (!formData.title.trim()) {
+      setErrors({...errors, title: "Entrez d'abord un titre"});
+      return;
+    }
+
+    setIsGenerating(true);
+    const description = await generateDescription(formData.title);
+    
+    if (description) {
+      setFormData({...formData, description});
+    }
+    
+    setIsGenerating(false);
+  };
+
   return (
     <div className="card">
       <h2>Nouvelle Tâche</h2>
@@ -94,15 +112,28 @@ function TodoForm({ onAdd }) {
         {/* Bonus - Ajout de la validation visuelle dans le formulaire */}
         <div className="form-group">
           <label htmlFor="description">Description</label>
-          <textarea
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-            placeholder="Description optionnelle"
-            rows="3"
-            className={errors.description ? "error" : ""}
-          />
+          <div style={{display: 'flex', gap: '10px', alignItems: 'flex-end'}}>
+            <div style={{flex: 1}}>
+              <textarea
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleInputChange}
+                placeholder="Description optionnelle"
+                rows="3"
+                className={errors.description ? "error" : ""}
+              />
+            </div>
+            <button 
+              type="button"
+              onClick={handleGenerateDescription}
+              disabled={isGenerating || !formData.title.trim()}
+              className="btn btn-secondary"
+              style={{height: 'fit-content', whiteSpace: 'nowrap'}}
+            >
+              {isGenerating ? 'Génération...' : 'IA'}
+            </button>
+          </div>
           {errors.description && (
             <span className="error-message">{errors.description}</span>
           )}
