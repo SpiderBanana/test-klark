@@ -1,0 +1,43 @@
+.card h2 {
+  margin-bottom: 20px;
+  color: var(--klark-dark);
+  font-size: 20px;
+}
+
+.error-message {
+  color: var(--klark-error);
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+.form-group input.error,
+.form-group textarea.error {
+  border-color: var(--klark-error);
+}
+
+.form-group input.error:focus,
+.form-group textarea.error:focus {
+  border-color: var(--klark-error);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* BUG INTENTIONNEL: Styles pour les messages de succès manquants */
+.success-message {
+  background-color: var(--klark-success);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+/* BUG INTENTIONNEL: Animation pour le bouton submit manquante */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+  background-color: var(--klark-primary);
+}

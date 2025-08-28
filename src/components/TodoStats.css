@@ -1,0 +1,144 @@
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 15px;
+  background-color: var(--klark-light);
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.stat-number {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--klark-primary);
+  margin-bottom: 5px;
+}
+
+.stat-number.completed {
+  color: var(--klark-success);
+}
+
+.stat-number.pending {
+  color: var(--klark-warning);
+}
+
+.stat-label {
+  font-size: 14px;
+  color: var(--klark-gray);
+  font-weight: 500;
+}
+
+.priority-stats {
+  margin-bottom: 25px;
+}
+
+.priority-stats h3 {
+  margin-bottom: 15px;
+  color: var(--klark-dark);
+  font-size: 16px;
+}
+
+.priority-grid {
+  display: flex;
+  gap: 10px;
+}
+
+.priority-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+  border-radius: 6px;
+  color: white;
+  font-weight: 500;
+}
+
+.priority-item.high {
+  background-color: var(--klark-error);
+}
+
+.priority-item.medium {
+  background-color: var(--klark-warning);
+}
+
+.priority-item.low {
+  background-color: var(--klark-success);
+}
+
+.priority-label {
+  font-size: 12px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.priority-count {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.overdue-warning {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #fef3c7;
+  border: 1px solid #fbbf24;
+  color: #92400e;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.warning-icon {
+  font-size: 16px;
+}
+
+.progress-section h3 {
+  margin-bottom: 15px;
+  color: var(--klark-dark);
+  font-size: 16px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--klark-success),
+    var(--klark-primary)
+  );
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  text-align: center;
+  font-size: 14px;
+  color: var(--klark-gray);
+  font-weight: 500;
+}
+
+/* BUG INTENTIONNEL: Responsivité manquante */
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .priority-grid {
+    flex-direction: column;
+  }
+}

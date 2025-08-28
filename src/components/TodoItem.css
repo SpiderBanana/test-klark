@@ -1,0 +1,178 @@
+.todo-item {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.todo-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.todo-item.completed {
+  opacity: 0.7;
+  background-color: #f8fafc;
+}
+
+.todo-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.todo-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 2px;
+}
+
+.checkbox-container input[type="checkbox"] {
+  display: none;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--klark-gray);
+  border-radius: 4px;
+  position: relative;
+  background-color: white;
+  transition: all 0.2s ease;
+}
+
+.checkbox-container input[type="checkbox"]:checked + .checkmark {
+  background-color: var(--klark-primary);
+  border-color: var(--klark-primary);
+}
+
+.checkbox-container input[type="checkbox"]:checked + .checkmark::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.todo-info {
+  flex: 1;
+}
+
+.todo-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--klark-dark);
+  margin: 0 0 5px 0;
+}
+
+.todo-title.completed {
+  text-decoration: line-through;
+  color: var(--klark-gray);
+}
+
+.todo-description {
+  color: var(--klark-gray);
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.todo-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.priority-badge {
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.due-date {
+  font-size: 12px;
+  color: var(--klark-gray);
+}
+
+.todo-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* Styles pour l'édition */
+.todo-item.editing {
+  background-color: #f8fafc;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.edit-title {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
+.edit-description {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.edit-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-controls select,
+.edit-controls input {
+  flex: 1;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+/* BUG INTENTIONNEL: Responsivité manquante */
+@media (max-width: 768px) {
+  .todo-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .todo-meta {
+    align-items: stretch;
+  }
+
+  .edit-controls {
+    flex-direction: column;
+  }
+}
