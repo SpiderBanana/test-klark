@@ -1,5 +1,9 @@
 import React from "react";
 import "./TodoStats.css";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js';
+import { Doughnut, Bar } from 'react-chartjs-2';
+
+ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
 function TodoStats({ todos }) {
   // BUG INTENTIONNEL: Calculs des statistiques manquants
@@ -77,6 +81,35 @@ function TodoStats({ todos }) {
   const stats = calculateStats();
   const overdueTasks = getOverdueTasks();
 
+  const completionData = {
+    labels: ['Terminées', 'En cours'],
+    datasets: [{
+      data: [stats.completed, stats.pending],
+      backgroundColor: ['#10b981', '#f59e0b'],
+      borderWidth: 0,
+    }]
+  };
+
+  const priorityData = {
+    labels: ['Haute', 'Moyenne', 'Basse'],
+    datasets: [{
+      label: 'Tâches par priorité',
+      data: [stats.highPriority, stats.mediumPriority, stats.lowPriority],
+      backgroundColor: ['#ef4444', '#f59e0b', '#10b981'],
+      borderWidth: 0,
+    }]
+  };
+
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom',
+      }
+    }
+  };
+
   return (
     <div className="card">
       <h2>Statistiques</h2>
@@ -105,20 +138,18 @@ function TodoStats({ todos }) {
 
       <div className="priority-stats">
         <h3>Par Priorité</h3>
-        <div className="priority-grid">
-          <div className="priority-item high">
-            <span className="priority-label">Haute</span>
-            <span className="priority-count">{stats.highPriority}</span>
+        <div className="charts-container">
+          <div className="chart-item">
+            <h4>Répartition des tâches</h4>
+            <div style={{ height: '200px' }}>
+              <Doughnut data={completionData} options={chartOptions} />
+            </div>
           </div>
-
-          <div className="priority-item medium">
-            <span className="priority-label">Moyenne</span>
-            <span className="priority-count">{stats.mediumPriority}</span>
-          </div>
-
-          <div className="priority-item low">
-            <span className="priority-label">Basse</span>
-            <span className="priority-count">{stats.lowPriority}</span>
+          <div className="chart-item">
+            <h4>Priorités</h4>
+            <div style={{ height: '200px' }}>
+              <Bar data={priorityData} options={chartOptions} />
+            </div>
           </div>
         </div>
       </div>
@@ -132,7 +163,7 @@ function TodoStats({ todos }) {
 
       {/* BUG INTENTIONNEL: Graphique de progression manquant */}
       <div className="progress-section">
-        <h3>Progression</h3>
+        <h3>Progression Globale</h3>
         <div className="progress-bar">
           <div
             className="progress-fill"
@@ -140,7 +171,7 @@ function TodoStats({ todos }) {
           ></div>
         </div>
         <div className="progress-text">
-          {stats.completed} sur {stats.total} tâches terminées
+          {stats.completed} sur {stats.total} tâches terminées ({stats.completionRate}%)
         </div>
       </div>
     </div>
