@@ -11,21 +11,37 @@ function TodoForm({ onAdd }) {
 
   const [errors, setErrors] = useState({});
 
+  // Bug Facile - Les formulaires ne répondent pas aux saisies (TodoForm)
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    formData[name] = value;
-    setFormData(formData);
+    setFormData({
+      ...formData,
+      [name]: value
+    });
   };
 
+  // Bug Difficile - Validation des données manquante (TodoForm)
   const validateForm = () => {
     const newErrors = {};
 
     if (!formData.title.trim()) {
       newErrors.title = "Le titre est requis";
+    } else if (formData.title.length > 100) {
+      newErrors.title = "Le titre ne peut pas dépasser 100 caractères";
     }
 
-    if (formData.title.length > 100) {
-      newErrors.title = "Le titre ne peut pas dépasser 100 caractères";
+    if (formData.description && formData.description.length > 500) {
+      newErrors.description = "La description ne peut pas dépasser 500 caractères";
+    }
+
+    if (formData.dueDate) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const dueDate = new Date(formData.dueDate);
+      
+      if (dueDate < today) {
+        newErrors.dueDate = "La date d'échéance ne peut pas être dans le passé";
+      }
     }
 
     setErrors(newErrors);
@@ -42,6 +58,15 @@ function TodoForm({ onAdd }) {
         priority: formData.priority,
         dueDate: formData.dueDate,
       });
+      
+      // Bonus - Réinitialisation du formulaire après soumission réussie
+      setFormData({
+        title: "",
+        description: "",
+        priority: "medium",
+        dueDate: "",
+      });
+      setErrors({});
     }
   };
 
@@ -66,6 +91,7 @@ function TodoForm({ onAdd }) {
           )}
         </div>
 
+        {/* Bonus - Ajout de la validation visuelle dans le formulaire */}
         <div className="form-group">
           <label htmlFor="description">Description</label>
           <textarea
@@ -75,7 +101,11 @@ function TodoForm({ onAdd }) {
             onChange={handleInputChange}
             placeholder="Description optionnelle"
             rows="3"
+            className={errors.description ? "error" : ""}
           />
+          {errors.description && (
+            <span className="error-message">{errors.description}</span>
+          )}
         </div>
 
         <div className="form-group">
@@ -92,6 +122,7 @@ function TodoForm({ onAdd }) {
           </select>
         </div>
 
+        {/* Bonus - Ajout de la validation visuelle dans le formulaire */}
         <div className="form-group">
           <label htmlFor="dueDate">Date d'échéance</label>
           <input
@@ -100,7 +131,11 @@ function TodoForm({ onAdd }) {
             name="dueDate"
             value={formData.dueDate}
             onChange={handleInputChange}
+            className={errors.dueDate ? "error" : ""}
           />
+          {errors.dueDate && (
+            <span className="error-message">{errors.dueDate}</span>
+          )}
         </div>
 
         <button type="submit" className="btn btn-primary">

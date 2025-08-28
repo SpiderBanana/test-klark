@@ -23,22 +23,34 @@ function TodoList({
       filtered = todos.filter((todo) => !todo.completed);
     }
 
-    // BUG INTENTIONNEL: Tri manquant
-    // TODO: Implémenter le tri par date, priorité, etc.
+    // Bug Difficile - Tri manquant dans TodoList
+    const sortedTodos = [...filtered].sort((a, b) => {
+      switch (sortBy) {
+        case "priority":
+          const priorityOrder = { high: 3, medium: 2, low: 1 };
+          return (priorityOrder[b.priority] || 0) - (priorityOrder[a.priority] || 0);
+        case "dueDate":
+          if (!a.dueDate && !b.dueDate) return 0;
+          if (!a.dueDate) return 1;
+          if (!b.dueDate) return -1;
+          return new Date(a.dueDate) - new Date(b.dueDate);
+        case "created":
+        default:
+          return b.id - a.id; // Plus récent en premier
+      }
+    });
 
-    return filtered;
+    return sortedTodos;
   };
 
-  // BUG INTENTIONNEL: Fonction de suppression manquante
+  // Bonus - Fonction de suppression et modification manquante dans TodoList
   const handleDelete = (id) => {
-    // TODO: Implémenter la suppression
-    console.log("Suppression de la tâche:", id);
+    onDeleteTodo(id);
   };
 
-  // BUG INTENTIONNEL: Fonction de modification manquante
+  // Bonus - Fonction de suppression et modification manquante dans TodoList
   const handleUpdate = (id, updatedData) => {
-    // TODO: Implémenter la modification
-    console.log("Modification de la tâche:", id, updatedData);
+    onUpdateTodo(id, updatedData);
   };
 
   if (loading) {
