@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./TodoItem.css";
+import "../styles/TodoItem.css";
 
 function TodoItem({ todo, onToggle, onDelete, onUpdate }) {
   // BUG INTENTIONNEL: État d'édition manquant

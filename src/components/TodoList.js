@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TodoItem from "./TodoItem";
-import "./TodoList.css";
+import "../styles/TodoList.css";
 
 function TodoList({
   todos,

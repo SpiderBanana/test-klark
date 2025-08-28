@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./TodoForm.css";
+import "../styles/TodoForm.css";
 import { generateDescription } from "../services/openaiService";
 
 function TodoForm({ onAdd }) {

@@ -1,5 +1,5 @@
 import React from "react";
-import "./TodoStats.css";
+import "../styles/TodoStats.css";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js';
 import { Doughnut, Bar } from 'react-chartjs-2';
 
